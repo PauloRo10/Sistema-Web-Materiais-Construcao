@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Seja Bem Vindo</title>
+    <link rel="stylesheet" href="/css/paginaInicial.css">
 </head>
 <body>
-    <h1>Bem-vindo à Página Inicial!</h1>
+    <div class="container">
+        <h1>Seja Bem Vindo</h1>
+        
+        <div class="button-container">
+            <button onclick="window.location.href='cliente.html'">Cliente</button>
+            <button onclick="window.location.href='orcamento.html'">Orçamento</button>
+            <button onclick="window.location.href='estoque.html'">Estoque</button>
+            <button onclick="window.location.href='funcionario.html'">Funcionário</button>
+            <button onclick="window.location.href='venda.html'">Venda</button>
+        </div>
+
+        <button class="exit-button" onclick="window.location.href='logout.html'">Sair</button>
+    </div>
 </body>
 </html>
