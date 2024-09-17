@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+}
+
+.container {
+    width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+    width: 70px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#cpf {
+    width: calc(100% - 160px);
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    width: 100px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+#buscar {
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#list {
+    border: 1px solid #000;
+    height: 150px;
+    overflow-y: scroll;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.buttons-row {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#right-buttons {
+    float: right;
+}
+
+#exit-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#exit-btn:hover {
+    background-color: #e60000;
+}
