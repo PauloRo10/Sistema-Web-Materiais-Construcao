@@ -6,16 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class pagina_inicialController {
-    /*@GetMapping("/pagina_inicial")
-    public String mostrarPaginaInicial() {
-        return "pagina_inicial"; // Nome do arquivo HTML da página inicial
-    }*/
 
     @GetMapping("/cliente")
     public String mostrarPaginaCliente() {
         return "paginaCliente"; // Nome do arquivo HTML da página de cliente
     }
-/*
+
     @GetMapping("/orcamento")
     public String mostrarPaginaOrcamento() {
         return "pagina_orcamento"; // Nome do arquivo HTML da página de orçamento
@@ -28,11 +24,11 @@ public class pagina_inicialController {
 
     @GetMapping("/funcionario")
     public String mostrarPaginaFuncionario() {
-        return "pagina_funcionario"; // Nome do arquivo HTML da página de funcionário
+        return "paginaFuncionario"; // Nome do arquivo HTML da página de funcionário
     }
 
     @GetMapping("/venda")
     public String mostrarPaginaVenda() {
         return "pagina_venda"; // Nome do arquivo HTML da página de venda
-    }*/
+    }
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Funcionário</title>
+    <link rel="stylesheet" href="/css/pagFuncionario.css">
+</head>
+<body>
+    <div class="container">
+        <button id="exit-btn">Sair</button>
+        <h2>Tela de Funcionário</h2>
+        
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome">
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf">
+            <button id="buscar" onclick="buscarFuncionario()">Buscar</button>
+        </div>
+
+        <div class="form-group">
+            <label for="rg">RG</label>
+            <input type="text" id="rg">
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone">
+        </div>
+
+        <div class="form-group">
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco">
+        </div>
+
+        <div class="form-group">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep">
+        </div>
+
+        <div class="form-group">
+            <label for="cargo">Cargo</label>
+            <select id="cargo">
+                <option value="">Selecione uma opção</option>
+                <option value="gerente">Gerente</option>
+                <option value="vendedor">Vendedor</option>
+                <option value="caixa">Caixa</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="salario">Salário</label>
+            <input type="number" id="salario" step="0.01">
+        </div>
+
+        <div class="buttons-row">
+            <button onclick="cadastrarFuncionario()">Cadastrar</button>
+            <button onclick="limparCampos()">Limpar</button>
+        </div>
+
+        <div id="list">Lista de funcionários aparecerá aqui</div>
+
+        <div class="buttons-row">
+            <button onclick="listarFuncionarios()">Listar</button>
+            <button onclick="excluirFuncionario()">Excluir</button>
+            <button onclick="adicionarOrcamento()">Adicionar ao Orçamento</button>
+        </div>
+    </div>
+
+    <script>
+        let funcionarios = [];
+
+        function cadastrarFuncionario() {
+            let nome = document.getElementById('nome').value;
+            let cpf = document.getElementById('cpf').value;
+            let rg = document.getElementById('rg').value;
+            let telefone = document.getElementById('telefone').value;
+            let endereco = document.getElementById('endereco').value;
+            let cep = document.getElementById('cep').value;
+            let cargo = document.getElementById('cargo').value;
+            let salario = document.getElementById('salario').value;
+
+            if (nome && cpf) {
+                let funcionario = { nome, cpf, rg, telefone, endereco, cep, cargo, salario };
+                funcionarios.push(funcionario);
+                document.getElementById('list').innerText = Funcionário cadastrado: ${JSON.stringify(funcionario)};
+            } else {
+                alert("Nome e CPF são obrigatórios.");
+            }
+        }
+
+        function limparCampos() {
+            document.getElementById('nome').value = '';
+            document.getElementById('cpf').value = '';
+            document.getElementById('rg').value = '';
+            document.getElementById('telefone').value = '';
+            document.getElementById('endereco').value = '';
+            document.getElementById('cep').value = '';
+            document.getElementById('cargo').value = '';
+            document.getElementById('salario').value = '';
+            document.getElementById('list').innerText = '';
+        }
+
+        function listarFuncionarios() {
+            if (funcionarios.length > 0) {
+                let lista = '';
+                funcionarios.forEach(funcionario => {
+                    lista += Nome: ${funcionario.nome}, CPF: ${funcionario.cpf}, Cargo: ${funcionario.cargo}, Salário: ${funcionario.salario}\n;
+                });
+                document.getElementById('list').innerText = lista;
+            } else {
+                document.getElementById('list').innerText = 'Nenhum funcionário cadastrado.';
+            }
+        }
+
+        function excluirFuncionario() {
+            let cpf = document.getElementById('cpf').value;
+            funcionarios = funcionarios.filter(funcionario => funcionario.cpf !== cpf);
+            listarFuncionarios();
+        }
+
+        function adicionarOrcamento() {
+            let cpf = document.getElementById('cpf').value;
+            let funcionario = funcionarios.find(funcionario => funcionario.cpf === cpf);
+            if (funcionario) {
+                document.getElementById('list').innerText = Funcionário adicionado ao orçamento: ${JSON.stringify(funcionario)};
+            } else {
+                alert("Funcionário não encontrado.");
+            }
+        }
+    </script>
+</body>
+</html>
