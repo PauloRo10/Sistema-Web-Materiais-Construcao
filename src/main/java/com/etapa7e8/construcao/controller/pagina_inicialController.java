@@ -19,7 +19,7 @@ public class pagina_inicialController {
 
     @GetMapping("/estoque")
     public String mostrarPaginaEstoque() {
-        return "pagina_estoque"; // Nome do arquivo HTML da página de estoque
+        return "paginaEstoque"; // Nome do arquivo HTML da página de estoque
     }
 
     @GetMapping("/funcionario")

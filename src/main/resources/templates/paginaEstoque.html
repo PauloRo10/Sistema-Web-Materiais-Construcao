@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Estoque</title>
+    <link rel="stylesheet" href="/css/pagEstoque.css">
+</head>
+<body>
+    <div class="container">
+        <button id="exit-btn">Sair</button>
+        <h2>Tela de Estoque</h2>
+        
+        <div class="form-group">
+            <label for="codigo">Código</label>
+            <input type="text" id="codigo">
+        </div>
+
+        <div class="form-group">
+            <label for="produto">Nome do produto</label>
+            <input type="text" id="produto">
+            <button id="buscar" onclick="buscarProduto()">Buscar</button>
+        </div>
+
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade">
+        </div>
+
+        <div class="form-group">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca">
+        </div>
+
+        <div class="form-group">
+            <label for="cnpj">CNPJ</label>
+            <input type="text" id="cnpj">
+        </div>
+
+        <div class="form-group">
+            <label for="valorEntrada">Valor de Entrada</label>
+            <input type="number" id="valorEntrada" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label for="valorVenda">Valor de Venda</label>
+            <input type="number" id="valorVenda" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label for="detalhes">Detalhes</label>
+            <textarea id="detalhes"></textarea>
+        </div>
+
+        <div class="buttons-row">
+            <button onclick="cadastrarProduto()">Cadastrar</button>
+            <button onclick="limparCampos()">Limpar</button>
+        </div>
+
+        <div id="list">Lista de produtos aparecerá aqui</div>
+
+        <div class="buttons-row">
+            <button onclick="listarProdutos()">Listar</button>
+            <button onclick="excluirProduto()">Excluir</button>
+            <button onclick="entradaSaida()">Entrada e Saída</button>
+        </div>
+    </div>
+
+    <script>
+        let produtos = [];
+
+        function cadastrarProduto() {
+            let codigo = document.getElementById('codigo').value;
+            let produto = document.getElementById('produto').value;
+            let quantidade = document.getElementById('quantidade').value;
+            let marca = document.getElementById('marca').value;
+            let cnpj = document.getElementById('cnpj').value;
+            let valorEntrada = document.getElementById('valorEntrada').value;
+            let valorVenda = document.getElementById('valorVenda').value;
+            let detalhes = document.getElementById('detalhes').value;
+
+            if (codigo && produto) {
+                let estoque = { codigo, produto, quantidade, marca, cnpj, valorEntrada, valorVenda, detalhes };
+                produtos.push(estoque);
+                document.getElementById('list').innerText = Produto cadastrado: ${JSON.stringify(estoque)};
+            } else {
+                alert("Código e nome do produto são obrigatórios.");
+            }
+        }
+
+        function limparCampos() {
+            document.getElementById('codigo').value = '';
+            document.getElementById('produto').value = '';
+            document.getElementById('quantidade').value = '';
+            document.getElementById('marca').value = '';
+            document.getElementById('cnpj').value = '';
+            document.getElementById('valorEntrada').value = '';
+            document.getElementById('valorVenda').value = '';
+            document.getElementById('detalhes').value = '';
+            document.getElementById('list').innerText = '';
+        }
+
+        function listarProdutos() {
+            if (produtos.length > 0) {
+                let lista = '';
+                produtos.forEach(produto => {
+                    lista += Produto: ${produto.produto}, Código: ${produto.codigo}, Quantidade: ${produto.quantidade}, Valor Venda: ${produto.valorVenda}\n;
+                });
+                document.getElementById('list').innerText = lista;
+            } else {
+                document.getElementById('list').innerText = 'Nenhum produto cadastrado.';
+            }
+        }
+
+        function excluirProduto() {
+            let codigo = document.getElementById('codigo').value;
+            produtos = produtos.filter(produto => produto.codigo !== codigo);
+            listarProdutos();
+        }
+
+        function entradaSaida() {
+            let codigo = document.getElementById('codigo').value;
+            let produto = produtos.find(produto => produto.codigo === codigo);
+            if (produto) {
+                document.getElementById('list').innerText = Produto entrada/saída: ${JSON.stringify(produto)};
+            } else {
+                alert("Produto não encontrado.");
+            }
+        }
+    </script>
+</body>
+</html>
