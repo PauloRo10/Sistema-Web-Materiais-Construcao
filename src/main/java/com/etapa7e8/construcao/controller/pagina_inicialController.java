@@ -29,6 +29,6 @@ public class pagina_inicialController {
 
     @GetMapping("/venda")
     public String mostrarPaginaVenda() {
-        return "pagina_venda"; // Nome do arquivo HTML da página de venda
+        return "paginaVenda"; // Nome do arquivo HTML da página de venda
     }
 }

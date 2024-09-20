@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venda</title>
+    <link rel="stylesheet" href="/css/pagVenda.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tela de Venda</h1>
+        <form id="vendaForm">
+            <label for="cpfCliente">CPF do cliente:</label>
+            <input type="text" id="cpfCliente" name="cpfCliente">
+            <label for="vendedor">Vendedor:</label>
+            <input type="text" id="vendedor" name="vendedor">
+            <button type="button" onclick="buscarOrcamento()">Buscar Orçamento</button><br><br>
+
+            <label for="formaPagamento">Forma de pagamento:</label>
+            <select id="formaPagamento" name="formaPagamento">
+                <option value="">Selecione</option>
+                <option value="cartao">Cartão</option>
+                <option value="dinheiro">Dinheiro</option>
+                <option value="boleto">Boleto</option>
+            </select><br><br>
+
+            <h2>Total: R$ <span id="totalVenda">0,00</span></h2>
+
+            <button type="button" onclick="pagarVenda()">Pagar</button>
+            <button type="button" onclick="limparFormulario()">Limpar</button><br><br>
+        </form>
+    </div>
+</body>
+</html>
