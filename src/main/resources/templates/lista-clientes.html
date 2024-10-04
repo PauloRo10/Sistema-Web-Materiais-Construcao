@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+    <!-- Incluindo o arquivo CSS global -->
+    <link rel="stylesheet" href="/css/pagCliente.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Clientes</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>CEP</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.nomeCliente}"></td>
+                    <td th:text="${cliente.cpfCliente}"></td>
+                    <td th:text="${cliente.rgCliente}"></td>
+                    <td th:text="${cliente.telefoneCliente}"></td>
+                    <td th:text="${cliente.enderecoCliente}"></td>
+                    <td th:text="${cliente.cepCliente}"></td>
+                    <td>
+                        <form th:action="@{/clientes/excluir}" method="post" th:object="${cliente}">
+                            <input type="hidden" th:field="*{cpfCliente}"/>
+                            <button type="submit">Excluir</button>
+                        </form>
+
+                        <form th:action="@{/clientes/editar}" method="get">
+                            <input type="hidden" name="cpfCliente" th:value="${cliente.cpfCliente}" />
+                            <button type="submit">Atualizar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <a href="/clientes">Voltar</a>
+    </div>
+</body>
+</html>

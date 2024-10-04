@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cliente</title>
+    <link rel="stylesheet" href="/css/pagCliente.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Cliente</h2>
+
+        <form th:action="@{/clientes/atualizar}" method="post" th:object="${cliente}">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nomeCliente" th:field="*{nomeCliente}" required>
+
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpfCliente" th:field="*{cpfCliente}" readonly>
+
+            <label for="rg">RG</label>
+            <input type="text" id="rg" name="rgCliente" th:field="*{rgCliente}" required>
+
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" name="telefoneCliente" th:field="*{telefoneCliente}" required>
+
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="enderecoCliente" th:field="*{enderecoCliente}" required>
+
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cepCliente" th:field="*{cepCliente}" required>
+
+            <button type="submit">Salvar Alterações</button>
+        </form>
+
+        <a href="/clientes/listar">Voltar</a>
+    </div>
+</body>
+</html>

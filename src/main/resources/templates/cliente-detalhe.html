@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Cliente</title>
+    <link rel="stylesheet" href="/css/pagCliente.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Detalhes do Cliente</h2>
+
+        <!-- Verifica se há mensagens de sucesso ou erro -->
+        <div th:if="${mensagemSucesso}" style="color: green;">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        <div th:if="${mensagemErro}" style="color: red;">
+            <p th:text="${mensagemErro}"></p>
+        </div>
+
+        <p>Nome: <span th:text="${cliente.nomeCliente}"></span></p>
+        <p>CPF: <span th:text="${cliente.cpfCliente}"></span></p>
+        <p>RG: <span th:text="${cliente.rgCliente}"></span></p>
+        <p>Telefone: <span th:text="${cliente.telefoneCliente}"></span></p>
+        <p>Endereço: <span th:text="${cliente.enderecoCliente}"></span></p>
+        <p>CEP: <span th:text="${cliente.cepCliente}"></span></p>
+
+        <!-- Botão para atualizar o cliente -->
+        <form th:action="@{/clientes/editar}" method="get">
+            <input type="hidden" name="cpfCliente" th:value="${cliente.cpfCliente}" />
+            <button type="submit">Atualizar Dados</button>
+        </form>
+
+        <!-- Botão para excluir o cliente -->
+        <form th:action="@{/clientes/excluir}" method="get" onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');">
+            <input type="hidden" name="cpfCliente" th:value="${cliente.cpfCliente}" />
+            <button type="submit" style="background-color: red; color: white;">Excluir Dados</button>
+        </form>
+
+        <!-- Botão para voltar para a lista de clientes -->
+        <a href="/clientes/pagina-Cliente">Voltar para Cliente</a>
+    </div>
+</body>
+</html>

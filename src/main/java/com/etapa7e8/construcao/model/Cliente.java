@@ -1,10 +1,15 @@
 
 package com.etapa7e8.construcao.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity(name = "cliente")
 public class Cliente {
@@ -12,11 +17,25 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCliente;
 
+    @NotNull(message = "Nome não pode ser vazio")
+    @Size(min = 2, message = "O nome deve ter pelo menos 2 caracteres")
     private String nomeCliente;
+    
+    @Column(name = "cpf_cliente",nullable = false,unique = true)
+    @NotNull(message = "CPF não pode ser vazio")
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve ter 11 dígitos")
     private String cpfCliente;
+
+    @NotNull(message = "RG não pode ser vazio")
     private String rgCliente;
+
+    @NotNull(message = "Telefone não pode ser vazio")
     private String telefoneCliente;
+
+    @NotNull(message = "Endereço não pode ser vazio")
     private String enderecoCliente;
+
+    @NotNull(message = "CEP não pode ser vazio")
     private String cepCliente;
 
     public Cliente() {}
