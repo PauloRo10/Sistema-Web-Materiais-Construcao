@@ -1,10 +1,14 @@
 
 package com.etapa7e8.construcao.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity(name = "funcionario")
 public class Funcionario {
@@ -12,28 +16,33 @@ public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idFuncionario;
 
+    @NotNull(message = "Nome não pode ser vazio")
+    @Size(min = 2, message = "O nome deve ter pelo menos 2 caracteres")
     private String nomeFuncionario;
+
+    @Column(nullable = false, unique = true)
+    @NotNull(message = "CPF não pode ser vazio")
+    @Pattern(regexp = "\\d{11}", message = "O CPF deve ter 11 dígitos")
     private String cpfFuncionario;
+
+    @NotNull(message = "RG não pode ser vazio")
     private String rgFuncionario;
+
+    @NotNull(message = "Telefone não pode ser vazio")
     private String telefoneFuncionario;
+
+    @NotNull(message = "Endereço não pode ser vazio")
     private String enderecoFuncionario;
+
+    @NotNull(message = "CEP não pode ser vazio")
     private String cepFuncionario;
+
+    @NotNull(message = "Cargo não pode ser vazio")
     private String cargo;
+
+    @NotNull(message = "Salário não pode ser vazio")
     private double salario;
 
-    public Funcionario() {}
-
-    public Funcionario(int idFuncionario, String nomeFuncionario, String cpfFuncionario, String rgFuncionario, String telefoneFuncionario, String enderecoFuncionario, String cepFuncionario, String cargo, double salario) {
-        this.idFuncionario = idFuncionario;
-        this.nomeFuncionario = nomeFuncionario;
-        this.cpfFuncionario = cpfFuncionario;
-        this.rgFuncionario = rgFuncionario;
-        this.telefoneFuncionario = telefoneFuncionario;
-        this.enderecoFuncionario = enderecoFuncionario;
-        this.cepFuncionario = cepFuncionario;
-        this.cargo = cargo;
-        this.salario = salario;
-    }
 
     public int getIdFuncionario() {
         return idFuncionario;

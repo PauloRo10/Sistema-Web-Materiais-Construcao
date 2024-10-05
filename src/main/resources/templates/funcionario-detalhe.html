@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Funcionário</title>
+    <link rel="stylesheet" href="/css/pagFuncionario.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Detalhes do Funcionário</h2>
+
+        <!-- Verifica se há mensagens de sucesso ou erro -->
+        <div th:if="${mensagemSucesso}" style="color: green;">
+            <p th:text="${mensagemSucesso}"></p>
+        </div>
+        <div th:if="${mensagemErro}" style="color: red;">
+            <p th:text="${mensagemErro}"></p>
+        </div>
+
+        <p>Nome: <span th:text="${funcionario.nomeFuncionario}"></span></p>
+        <p>CPF: <span th:text="${funcionario.cpfFuncionario}"></span></p>
+        <p>RG: <span th:text="${funcionario.rgFuncionario}"></span></p>
+        <p>Telefone: <span th:text="${funcionario.telefoneFuncionario}"></span></p>
+        <p>Endereço: <span th:text="${funcionario.enderecoFuncionario}"></span></p>
+        <p>CEP: <span th:text="${funcionario.cepFuncionario}"></span></p>
+        <p>Cargo: <span th:text="${funcionario.cargo}"></span></p>
+        <p>Salário: <span th:text="${funcionario.salario}"></span></p>
+
+        <!-- Botão para atualizar o funcionário -->
+        <form th:action="@{/funcionarios/editar}" method="get">
+            <input type="hidden" name="cpfFuncionario" th:value="${funcionario.cpfFuncionario}" />
+            <button type="submit">Atualizar Dados</button>
+        </form>
+
+        <!-- Botão para excluir o funcionário -->
+        <form th:action="@{/funcionarios/excluir}" method="get" onsubmit="return confirm('Tem certeza que deseja excluir este funcionário?');">
+            <input type="hidden" name="cpfFuncionario" th:value="${funcionario.cpfFuncionario}" />
+            <button type="submit" style="background-color: red; color: white;">Excluir Dados</button>
+        </form>
+
+        <!-- Botão para voltar para a página principal de funcionários -->
+        <a href="/funcionarios/pagina-Funcionario">Voltar para Funcionários</a>
+    </div>
+</body>
+</html>
