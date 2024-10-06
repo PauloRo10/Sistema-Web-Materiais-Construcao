@@ -1,132 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Estoque</title>
+    <title>Gerenciamento de Estoque</title>
     <link rel="stylesheet" href="/css/pagEstoque.css">
 </head>
 <body>
     <div class="container">
-        <button id="exit-btn">Sair</button>
-        <h2>Tela de Estoque</h2>
-        
-        <div class="form-group">
-            <label for="codigo">Código</label>
-            <input type="text" id="codigo">
-        </div>
+        <h2>Gerenciamento de Estoque</h2>
 
-        <div class="form-group">
-            <label for="produto">Nome do produto</label>
-            <input type="text" id="produto">
-            <button id="buscar" onclick="buscarProduto()">Buscar</button>
-        </div>
+        <!-- Formulário para cadastrar produto -->
+        <form th:action="@{/estoque/cadastrar}" method="post">
+            <label for="produto">Produto</label>
+            <input type="text" id="produto" name="produto" required>
 
-        <div class="form-group">
-            <label for="quantidade">Quantidade</label>
-            <input type="number" id="quantidade">
-        </div>
+            <label for="codigo">Código do Produto</label>
+            <input type="text" id="codigo" name="codigo" required>
 
-        <div class="form-group">
             <label for="marca">Marca</label>
-            <input type="text" id="marca">
-        </div>
+            <input type="text" id="marca" name="marca" required>
 
-        <div class="form-group">
             <label for="cnpj">CNPJ</label>
-            <input type="text" id="cnpj">
-        </div>
+            <input type="text" id="cnpj" name="cnpj" required>
 
-        <div class="form-group">
             <label for="valorEntrada">Valor de Entrada</label>
-            <input type="number" id="valorEntrada" step="0.01">
-        </div>
+            <input type="number" id="valorEntrada" name="valorEntrada" step="0.01" required>
 
-        <div class="form-group">
             <label for="valorVenda">Valor de Venda</label>
-            <input type="number" id="valorVenda" step="0.01">
-        </div>
+            <input type="number" id="valorVenda" name="valorVenda" step="0.01" required>
 
-        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade" name="quantidade" required>
+
             <label for="detalhes">Detalhes</label>
-            <textarea id="detalhes"></textarea>
+            <textarea id="detalhes" name="detalhes"></textarea>
+
+            <div class="buttons-row">
+                <button type="submit">Cadastrar Produto</button>
+                <button type="reset">Limpar</button>
+            </div>
+        </form>
+
+        <!-- Formulário para entrada e saída de produtos -->
+        <form th:action="@{/estoque/entrada}" method="post">
+            <label for="codigoEntrada">Código do Produto</label>
+            <input type="text" id="codigoEntrada" name="codigo" required>
+
+            <label for="quantidadeEntrada">Quantidade Entrada</label>
+            <input type="number" id="quantidadeEntrada" name="quantidade" required>
+            <button type="submit">Registrar Entrada</button>
+        </form>
+
+        <form th:action="@{/estoque/saida}" method="post">
+            <label for="codigoSaida">Código do Produto</label>
+            <input type="text" id="codigoSaida" name="codigo" required>
+
+            <label for="quantidadeSaida">Quantidade Saída</label>
+            <input type="number" id="quantidadeSaida" name="quantidade" required>
+            <button type="submit">Registrar Saída</button>
+        </form>
+
+        <!-- Botão para acessar a página de busca de produtos -->
+        <div class="buttons-row">
+            <a href="/estoque/pagina-busca" class="button">Buscar Produto</a>
         </div>
 
-        <div class="buttons-row">
-            <button onclick="cadastrarProduto()">Cadastrar</button>
-            <button onclick="limparCampos()">Limpar</button>
+        <!-- Lista de produtos -->
+        <h3>Lista de Produtos no Estoque</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Marca</th>
+                    <th>Valor Venda</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="produto : ${produtos}">
+                    <td th:text="${produto.codigo}"></td>
+                    <td th:text="${produto.produto}"></td>
+                    <td th:text="${produto.quantidade}"></td>
+                    <td th:text="${produto.marca}"></td>
+                    <td th:text="${produto.valorVenda}"></td>
+                    <td>
+                        <form th:action="@{/estoque/excluir}" method="get">
+                            <input type="hidden" name="codigo" th:value="${produto.codigo}" />
+                            <button type="submit" class="button-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Exibição de mensagens de sucesso ou erro -->
+        <div th:if="${mensagemSucesso != null}">
+            <p th:text="${mensagemSucesso}" style="color: green;"></p>
         </div>
 
-        <div id="list">Lista de produtos aparecerá aqui</div>
-
-        <div class="buttons-row">
-            <button onclick="listarProdutos()">Listar</button>
-            <button onclick="excluirProduto()">Excluir</button>
-            <button onclick="entradaSaida()">Entrada e Saída</button>
+        <div th:if="${mensagemErro != null}">
+            <p th:text="${mensagemErro}" style="color: red;"></p>
         </div>
     </div>
-
-    <script>
-        let produtos = [];
-
-        function cadastrarProduto() {
-            let codigo = document.getElementById('codigo').value;
-            let produto = document.getElementById('produto').value;
-            let quantidade = document.getElementById('quantidade').value;
-            let marca = document.getElementById('marca').value;
-            let cnpj = document.getElementById('cnpj').value;
-            let valorEntrada = document.getElementById('valorEntrada').value;
-            let valorVenda = document.getElementById('valorVenda').value;
-            let detalhes = document.getElementById('detalhes').value;
-
-            if (codigo && produto) {
-                let estoque = { codigo, produto, quantidade, marca, cnpj, valorEntrada, valorVenda, detalhes };
-                produtos.push(estoque);
-                document.getElementById('list').innerText = Produto cadastrado: ${JSON.stringify(estoque)};
-            } else {
-                alert("Código e nome do produto são obrigatórios.");
-            }
-        }
-
-        function limparCampos() {
-            document.getElementById('codigo').value = '';
-            document.getElementById('produto').value = '';
-            document.getElementById('quantidade').value = '';
-            document.getElementById('marca').value = '';
-            document.getElementById('cnpj').value = '';
-            document.getElementById('valorEntrada').value = '';
-            document.getElementById('valorVenda').value = '';
-            document.getElementById('detalhes').value = '';
-            document.getElementById('list').innerText = '';
-        }
-
-        function listarProdutos() {
-            if (produtos.length > 0) {
-                let lista = '';
-                produtos.forEach(produto => {
-                    lista += Produto: ${produto.produto}, Código: ${produto.codigo}, Quantidade: ${produto.quantidade}, Valor Venda: ${produto.valorVenda}\n;
-                });
-                document.getElementById('list').innerText = lista;
-            } else {
-                document.getElementById('list').innerText = 'Nenhum produto cadastrado.';
-            }
-        }
-
-        function excluirProduto() {
-            let codigo = document.getElementById('codigo').value;
-            produtos = produtos.filter(produto => produto.codigo !== codigo);
-            listarProdutos();
-        }
-
-        function entradaSaida() {
-            let codigo = document.getElementById('codigo').value;
-            let produto = produtos.find(produto => produto.codigo === codigo);
-            if (produto) {
-                document.getElementById('list').innerText = Produto entrada/saída: ${JSON.stringify(produto)};
-            } else {
-                alert("Produto não encontrado.");
-            }
-        }
-    </script>
 </body>
 </html>

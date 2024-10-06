@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="/css/pagEstoque.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Produto</h2>
+
+        <!-- Exibição de mensagens de sucesso ou erro -->
+        <div th:if="${mensagemSucesso != null}">
+            <p th:text="${mensagemSucesso}" style="color: green;"></p>
+        </div>
+
+        <div th:if="${mensagemErro != null}">
+            <p th:text="${mensagemErro}" style="color: red;"></p>
+        </div>
+
+        <!-- Formulário para editar o produto -->
+        <form th:action="@{/estoque/atualizar}" method="post" th:object="${produto}">
+    <!-- Campo oculto para o ID -->
+    <input type="hidden" name="idEstoque" th:field="*{idEstoque}" />
+
+    <label for="codigo">Código do Produto</label>
+    <input type="text" id="codigo" name="codigo" th:field="*{codigo}" readonly>
+
+    <label for="produto">Produto</label>
+    <input type="text" id="produto" name="produto" th:field="*{produto}" required>
+
+    <label for="quantidade">Quantidade</label>
+    <input type="number" id="quantidade" name="quantidade" th:field="*{quantidade}" required>
+
+    <label for="marca">Marca</label>
+    <input type="text" id="marca" name="marca" th:field="*{marca}" required>
+
+    <label for="cnpj">CNPJ</label>
+    <input type="text" id="cnpj" name="cnpj" th:field="*{cnpj}" required>
+
+    <label for="valorEntrada">Valor de Entrada</label>
+    <input type="number" id="valorEntrada" name="valorEntrada" th:field="*{valorEntrada}" step="0.01" required>
+
+    <label for="valorVenda">Valor de Venda</label>
+    <input type="number" id="valorVenda" name="valorVenda" th:field="*{valorVenda}" step="0.01" required>
+
+    <label for="detalhes">Detalhes</label>
+    <textarea id="detalhes" name="detalhes" th:field="*{detalhes}"></textarea>
+
+    <div class="buttons-row">
+        <button type="submit">Salvar Alterações</button>
+    </div>
+</form>
+
+        <!-- Botão para excluir o produto -->
+        <form th:action="@{/estoque/excluir}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este produto?');">
+            <button type="submit" class="button-delete">Excluir Produto</button>
+        </form>
+
+        <!-- Botão para voltar à página de estoque -->
+        <a href="/estoque/listar">Voltar para Estoque</a>
+    </div>
+</body>
+</html>

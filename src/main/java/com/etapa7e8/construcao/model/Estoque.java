@@ -14,7 +14,7 @@ public class Estoque {
 
     private int codigo;
     private String produto;
-    private int quantidade;
+    private int quantidade;  // Representa a quantidade em estoque
     private String marca;
     private String cnpj;
     private double valorEntrada;
@@ -34,6 +34,7 @@ public class Estoque {
         this.valorVenda = valorVenda;
         this.detalhes = detalhes;
     }
+
 
     public int getIdEstoque() {
         return idEstoque;
@@ -106,6 +107,18 @@ public class Estoque {
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
     }
+        public void adicionarQuantidade(int quantidadeEntrada) {
+        this.quantidade += quantidadeEntrada;
+    }
+
+    public void retirarQuantidade(int quantidadeSaida) {
+        if (this.quantidade >= quantidadeSaida) {
+            this.quantidade -= quantidadeSaida;
+        } else {
+            throw new IllegalArgumentException("Quantidade em estoque insuficiente.");
+        }
+    }
+
     
     
 }
