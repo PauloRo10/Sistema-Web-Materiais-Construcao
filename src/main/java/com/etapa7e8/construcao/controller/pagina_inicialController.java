@@ -14,7 +14,7 @@ public class pagina_inicialController {
 
     @GetMapping("/orcamento")
     public String mostrarPaginaOrcamento() {
-        return "paginaOrcamento"; // Nome do arquivo HTML da página de orçamento
+        return "redirect:/orcamento/novo"; // Nome do arquivo HTML da página de orçamento
     }
 
     @GetMapping("/estoque")

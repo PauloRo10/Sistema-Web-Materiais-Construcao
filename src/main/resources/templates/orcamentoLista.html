@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Orçamento</title>
+</head>
+<body>
+    <h2>Lista de Orçamento</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Marca</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="orcamento : ${orcamentos}">
+                <td th:text="${orcamento.estoque.produto}"></td>
+                <td th:text="${orcamento.estoque.marca}"></td>
+                <td th:text="${orcamento.quantidadeOrcamento}"></td>
+                <td th:text="${orcamento.estoque.valorVenda}"></td>
+                <td th:text="${orcamento.estoque.valorVenda * orcamento.quantidadeOrcamento}"></td>
+                <td>
+                    <a th:href="@{/orcamento/editar/{id}(id=${orcamento.idOrcamento})}">Editar</a> |
+                    <a th:href="@{/orcamento/excluir/{id}(id=${orcamento.idOrcamento})}" 
+                       onclick="return confirm('Tem certeza que deseja excluir este item do orçamento?');">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Total do Orçamento: <span th:text="${total}"></span></h3>
+
+    <a th:href="@{/orcamento/criar}">Adicionar mais produtos</a>
+    <a href="/clientes/pagina-cliente">Voltar para Clientes</a>
+</body>
+</html>

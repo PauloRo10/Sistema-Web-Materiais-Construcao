@@ -9,26 +9,62 @@
 <body>
     <div class="container">
         <h1>Tela de Venda</h1>
-        <form id="vendaForm">
+        <form action="/vendas/buscar-orcamento" method="post">
             <label for="cpfCliente">CPF do cliente:</label>
-            <input type="text" id="cpfCliente" name="cpfCliente">
-            <label for="vendedor">Vendedor:</label>
-            <input type="text" id="vendedor" name="vendedor">
-            <button type="button" onclick="buscarOrcamento()">Buscar Orçamento</button><br><br>
+            <input type="text" id="cpfCliente" name="cpfCliente" required>
+            <button type="submit">Buscar Orçamento</button><
+            </form>
+
+        <!-- Exibição da lista de orçamentos encontrados -->
+        <h3>Orçamentos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitário</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="orcamento : ${orcamentos}">
+                    <td th:text="${orcamento.estoque.produto}"></td>
+                    <td th:text="${orcamento.quantidadeOrcamento}"></td>
+                    <td th:text="${orcamento.estoque.valorVenda}"></td>
+                    <td th:text="${orcamento.estoque.valorVenda * orcamento.quantidadeOrcamento}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Exibição do total da venda -->
+        <h2>Total: R$ <span th:text="${totalVenda}"></span></h2>
+
+        <!-- Formulário para pagamento -->
+        <form action="/vendas/pagar" method="post">
+            <input type="hidden" name="cpfCliente" th:value="${cpfCliente}">
+            <input type="hidden" name="vendedor" th:value="${vendedor}">
 
             <label for="formaPagamento">Forma de pagamento:</label>
-            <select id="formaPagamento" name="formaPagamento">
+            <select id="formaPagamento" name="formaPagamento" required>
                 <option value="">Selecione</option>
                 <option value="cartao">Cartão</option>
                 <option value="dinheiro">Dinheiro</option>
                 <option value="boleto">Boleto</option>
             </select><br><br>
 
-            <h2>Total: R$ <span id="totalVenda">0,00</span></h2>
-
-            <button type="button" onclick="pagarVenda()">Pagar</button>
-            <button type="button" onclick="limparFormulario()">Limpar</button><br><br>
+            <button type="submit">Pagar</button>
         </form>
+
+        <!-- Mensagem de sucesso ou erro -->
+        <div th:if="${mensagemSucesso != null}">
+            <p th:text="${mensagemSucesso}" style="color: green;"></p>
+        </div>
+
+        <div th:if="${mensagemErro != null}">
+            <p th:text="${mensagemErro}" style="color: red;"></p>
+        </div>
+
+        <button type="button" onclick="window.location.href='/orcamentos/listar'">Voltar para Orçamentos</button>
     </div>
 </body>
 </html>

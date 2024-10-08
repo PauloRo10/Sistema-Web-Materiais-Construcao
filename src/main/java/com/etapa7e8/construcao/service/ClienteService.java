@@ -63,5 +63,10 @@ public class ClienteService {
     } else {
         throw new IllegalArgumentException("Cliente não encontrado com CPF: " + clienteAtualizado.getCpfCliente());
     }
+    
 }
+     public Cliente buscarPorCpf(String cpfCliente) {
+        return clienteRepository.findByCpfCliente(cpfCliente)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado para o CPF: " + cpfCliente));
+    }
 }

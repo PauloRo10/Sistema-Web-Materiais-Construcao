@@ -57,4 +57,7 @@ public class FuncionarioService {
             throw new IllegalArgumentException("Funcionário não encontrado.");
         }
     }
+    public List<Funcionario> buscarPorNome(String nomeFuncionario) {
+        return funcionarioRepository.findByNomeFuncionarioContainingIgnoreCase(nomeFuncionario);
+    }
 }

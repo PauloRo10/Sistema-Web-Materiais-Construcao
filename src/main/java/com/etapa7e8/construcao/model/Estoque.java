@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEstoque;
+    private Integer idEstoque;
 
     private int codigo;
     private String produto;

@@ -61,4 +61,9 @@ public class EstoqueService {
     public Optional<Estoque> buscarPorId(int idEstoque) {
     return estoqueRepository.findById(idEstoque);
 }
+     public List<Estoque> buscarPorNome(String nomeProduto) {
+        return estoqueRepository.findByProdutoContainingIgnoreCase(nomeProduto);
+    }
+
+    
 }
